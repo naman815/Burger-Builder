@@ -1,6 +1,7 @@
 import React,{Component} from 'react'
 import Modal from '../../components/UI/Modal/Modal';
 import Aux from '../Aux';
+import {NavLink} from 'react-router-dom';
 
 const withErrorHandler =(WrappedComponent,axios) => {
     return class extends Component{
@@ -35,7 +36,10 @@ const withErrorHandler =(WrappedComponent,axios) => {
                 <Aux>
                     <Modal show={this.state.error}
                         clicked={this.errorConfirmedHandler}>
-                        {this.state.error ? this.state.error.message : null}
+                        <p>
+                            {this.state.error ? this.state.error.message : null}
+                        </p>
+                        <NavLink to="/">close</NavLink>
                     </Modal>
                     <WrappedComponent {...this.props}/>
                 </Aux>

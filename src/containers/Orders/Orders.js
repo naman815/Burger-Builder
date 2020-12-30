@@ -10,17 +10,28 @@ class Orders extends Component {
 
 
     componentDidMount(){
-        this.props.onFetchOrders();
+        this.props.onFetchOrders(this.props.token,this.props.userId);
     }
 
     render() {
+        const style ={
+            textAlign : "center"
+        }
+
         let or = <Spinner/>
         if(!this.props.loading){
-            or =  this.props.orders.map(order =>{
-                return <Order key ={order.id} ingredients={order.ingredients} 
-                    price = {order.price}
-                />
-            })
+           if(this.props.order){
+                or =  this.props.orders.map(order =>{
+                    return <Order key ={order.id} ingredients={order.ingredients} 
+                        price = {order.price}
+                    />
+                })
+           }
+           else{
+               or = (
+                   <p style={style}>No order found, Please place a new Order</p>
+               )
+           }
         }
         return (
             
@@ -34,13 +45,15 @@ class Orders extends Component {
 const mapStateToProps = state =>{
     return {
         orders : state.order.orders,
-        loading : state.order.loading
+        loading : state.order.loading,
+        token : state.auth.token,
+        userId : state.auth.userId
     }
 }
 
 const mapDispatchToProps = dispatch =>{
     return {
-        onFetchOrders : ()=> dispatch(actions.fetchOrders())
+        onFetchOrders : (token,userId)=> dispatch(actions.fetchOrders(token,userId))
     }
 }
 
