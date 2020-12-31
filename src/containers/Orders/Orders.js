@@ -20,18 +20,13 @@ class Orders extends Component {
 
         let or = <Spinner/>
         if(!this.props.loading){
-           if(this.props.order){
+           
                 or =  this.props.orders.map(order =>{
                     return <Order key ={order.id} ingredients={order.ingredients} 
                         price = {order.price}
                     />
                 })
-           }
-           else{
-               or = (
-                   <p style={style}>No order found, Please place a new Order</p>
-               )
-           }
+           
         }
         return (
             
